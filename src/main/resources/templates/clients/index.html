@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиенты</title>
+</head>
+<body>
+
+<a href="/">Вернуться на главную страницу</a>
+<hr/>
+
+<h2>Клиенты</h2>
+<div th:each="client : ${clients}">
+    <a th:text="${client.name} + ', ' + ${client.birthdate}">client</a>
+</div>
+
+<hr/>
+<a href="/clients/add">Добавить</a>
+
+</body>
+</html>
