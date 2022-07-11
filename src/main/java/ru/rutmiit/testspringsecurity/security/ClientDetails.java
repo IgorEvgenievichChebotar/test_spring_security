@@ -49,7 +49,7 @@ public class ClientDetails implements UserDetails {
         return true;
     }
 
-    Client getClient(){
+    public Client getClient(){
         return this.client;
     }
 }

@@ -1,6 +1,7 @@
 package ru.rutmiit.testspringsecurity.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Client")
@@ -11,9 +12,11 @@ public class Client {
     private Integer id;
 
     @Column(name = "username")
+    @NotEmpty(message = "Пустое поле")
     private String username;
 
     @Column(name = "password")
+    @NotEmpty(message = "Пустое поле")
     private String password;
 
     @Column(name = "name")
@@ -68,5 +71,16 @@ public class Client {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", birthdate=" + birthdate +
+                '}';
     }
 }

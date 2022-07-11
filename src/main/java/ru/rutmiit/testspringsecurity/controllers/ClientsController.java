@@ -3,11 +3,12 @@ package ru.rutmiit.testspringsecurity.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ru.rutmiit.testspringsecurity.models.Client;
 import ru.rutmiit.testspringsecurity.services.ClientsDetailsService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/clients")
@@ -33,5 +34,24 @@ public class ClientsController {
         model.addAttribute("client", client);
 
         return "clients/show";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("client", clientsDetailsService.findById(id).orElse(null));
+
+        return "clients/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") Integer id,
+                         @ModelAttribute("client") @Valid Client client,
+                         BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "/clients/edit";
+
+        clientsDetailsService.save(client);
+
+        return "redirect:/clients/" + id;
     }
 }

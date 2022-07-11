@@ -9,7 +9,14 @@
 <a href="/">Вернуться на главную страницу</a>
 <hr/>
 
-<h3 th:text="${client.name} + ', ' + ${client.birthdate}">client</h3>
+<div th:if="${client.name == null}">
+    <a th:href="@{/clients/{id}/edit(id=${client.getId()})}"
+       style="color: green">Заполнить данные профиля</a>
+</div>
+
+<div th:if="${client.name != null}">
+    <h3 th:text="${client.name} + ', ' + ${client.birthdate}">client</h3>
+</div>
 
 <hr/>
 <a href="/clients">Вернуться</a>

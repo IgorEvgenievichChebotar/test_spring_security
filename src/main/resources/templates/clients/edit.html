@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+</head>
+<body>
+
+<a href="/">Вернуться на домашнюю страницу</a>
+<hr/>
+
+<form th:method="PATCH" th:action="@{/clients/{id}(id=${client.getId()})}" th:object="${client}">
+
+    <label for="name">Имя</label>
+    <input type="text" id="name" th:field="*{name}">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">name</div>
+
+    <br/>
+
+    <label for="birthdate">Дата рождения</label>
+    <input type="text" id="birthdate" th:field="*{birthdate}">
+    <div th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" style="color: red">birthdate</div>
+
+
+    <input type="text" th:field="*{username}" hidden>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">error</div>
+
+
+    <input type="text" th:field="*{password}" hidden>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" hidden>error</div>
+
+    <br/>
+
+    <input type="submit" value="Обновить">
+
+</form>
+
+<hr/>
+<a th:href="@{/clients/{id}(id=${client.getId()})}">Вернуться</a>
+
+</body>
+</html>

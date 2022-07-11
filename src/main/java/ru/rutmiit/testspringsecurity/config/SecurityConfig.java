@@ -25,6 +25,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(clientsDetailsService);
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable() // Отключение защиты от меж-сайтовой подделки запросов
+                .authorizeRequests() // Все запросы теперь проходят через авторизацию
+                .antMatchers("/auth/login", "/auth/reg", "/error").permitAll() // Кроме этих
+                .anyRequest().authenticated() // Для всех других запросов нужна аутентификация
+                .and()
+                .formLogin().loginPage("/auth/login") // html форма для логина
+                .loginProcessingUrl("/process_login") // url адрес для логина
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/auth/login?error");
+    }
+
     @Bean
     PasswordEncoder getPasswordEncoder(){
         return NoOpPasswordEncoder.getInstance();

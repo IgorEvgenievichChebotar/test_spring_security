@@ -8,6 +8,11 @@
 
 <h1>Домашняя страница</h1>
 
+<a th:text="${client.getUsername()}"
+   th:href="@{/clients/{id}(id=${client.getId()})}"
+   style="position: absolute; right: 20px; bottom: 0; top: 30px">client
+</a>
+
 <hr/>
 <a href="/clients">Клиенты</a>
 

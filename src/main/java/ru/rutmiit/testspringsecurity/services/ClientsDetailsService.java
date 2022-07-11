@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.rutmiit.testspringsecurity.models.Client;
 import ru.rutmiit.testspringsecurity.repositories.ClientsRepository;
 import ru.rutmiit.testspringsecurity.security.ClientDetails;
@@ -13,6 +14,7 @@ import ru.rutmiit.testspringsecurity.security.ClientDetails;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional(readOnly = true)
 @Service
 public class ClientsDetailsService implements UserDetailsService {
     private final ClientsRepository clientsRepository;
@@ -42,5 +44,10 @@ public class ClientsDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Пользователь не найден");
 
         return new ClientDetails(client.get());
+    }
+
+    @Transactional
+    public void save(Client client) {
+        clientsRepository.save(client);
     }
 }
