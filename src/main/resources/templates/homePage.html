@@ -10,7 +10,11 @@
 
 <a th:text="${client.getUsername()}"
    th:href="@{/clients/{id}(id=${client.getId()})}"
-   style="position: absolute; right: 20px; bottom: 0; top: 30px">client
+   style="position: absolute; right: 20px; top: 30px">client
+</a>
+
+<a href="/logout" style="color: red; position: absolute; right: 20px; top: 50px">
+    Выйти
 </a>
 
 <hr/>

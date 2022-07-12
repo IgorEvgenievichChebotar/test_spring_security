@@ -1,10 +1,12 @@
 package ru.rutmiit.testspringsecurity.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rutmiit.testspringsecurity.models.Client;
@@ -18,10 +20,12 @@ import java.util.Optional;
 @Service
 public class ClientsDetailsService implements UserDetailsService {
     private final ClientsRepository clientsRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClientsDetailsService(ClientsRepository clientsRepository) {
+    public ClientsDetailsService(ClientsRepository clientsRepository,@Lazy PasswordEncoder passwordEncoder) {
         this.clientsRepository = clientsRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<Client> findByUsername(String username){
@@ -48,6 +52,8 @@ public class ClientsDetailsService implements UserDetailsService {
 
     @Transactional
     public void save(Client client) {
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+
         clientsRepository.save(client);
     }
 }
