@@ -35,11 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/auth/login") // html форма для логина
                 .loginProcessingUrl("/process_login") // url адрес для логина
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/auth/login?error")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/auth/login");
+                .failureUrl("/auth/login?error");
     }
 
     @Bean
