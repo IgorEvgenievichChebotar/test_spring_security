@@ -26,9 +26,12 @@ public class Client {
     private int birthdate;
 
     public Client() {
+        this.name = null;
+        this.birthdate = 1901;
     }
 
     public Client(String username, String password) {
+        this();
         this.username = username;
         this.password = password;
     }
